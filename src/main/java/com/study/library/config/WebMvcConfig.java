@@ -11,7 +11,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) { // 크로스 오리진 허용 3000 / 8080
                                                          // CORS(Cross-Origin Resource Sharing) 구성 메서드
         registry.addMapping("/**")    // 모든 요청 주소
-                .allowedHeaders("*")  // 모든메서드
+                .allowedMethods("*")  // 모든메서드
                 .allowedOrigins("*"); // 어디에서 들어오든  다받아준다
     }
 }

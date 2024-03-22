@@ -34,16 +34,17 @@ spring:
     oauth2:
       client:
         registration:
+          google:
+            - email
+            - profile
           naver:
             clientName: Naver
             authorizationGrantType: authorization_code
-
+            clientAuthenticationMethod: POST
           kakao:
             clientName: Kakao
             authorizationGrantType: authorization_code
-
-
-
+            clientAuthenticationMethod: POST
         provider:
           naver:
             authorizationUri: https://nid.naver.com/oauth2.0/authorize
