@@ -17,3 +17,5 @@ public class BookType {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 }
+
+

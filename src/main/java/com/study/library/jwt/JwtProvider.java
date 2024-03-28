@@ -39,14 +39,12 @@ public class JwtProvider {
 
 
     public String generateToken(User user) {
-
-
         int userId = user.getUserId();
         String username = user.getUsername();
-
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+        Date expireDate = new Date(new Date().getTime() +( 1000 * 60 * 60 * 24 * 20));
 
-        Date expireDate = new Date(new Date().getTime() +( 1000 * 60 * 60 * 24));
+
         //    만료날짜               지금 시간에서 하루 더해라  => 하루가더해진 시간 객체가 만들어짐
         String accessToken = Jwts.builder()
                 .claim("userId", userId) //제이슨 형식으로 키밸류 들어감
