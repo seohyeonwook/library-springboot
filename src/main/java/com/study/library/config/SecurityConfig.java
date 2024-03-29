@@ -62,11 +62,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//0313-1
                 .authenticated() //인증받아라
                 .and()
                 .addFilterAfter(permitAllFilter, LogoutFilter.class)// 위에 보다 얘들이 먼저다 매개변수 순서대로 간다 1하고 2
+                // 요청들어왔을떄 url분석해서 바로보낼건지 jwtAuthenticationFilter거칠지 결정한다
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint)
                 .and()
-                .oauth2Login()
+                .oauth2Login()// 로그인 시작 이거 다는순간에 oauth2 정보들을 가지고와서 필터 거칠거다
                 .successHandler(oAuth2SuccessHandler)
                 .userInfoEndpoint()
                 // OAuth2로그인 토큰검사
