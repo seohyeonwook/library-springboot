@@ -40,6 +40,8 @@ public class AuthController { //0313 -2
 
         return ResponseEntity.created(null).body(true);
     } //*************회원가입
+    // 사용자가 회원가입을 요청할 때 호출되는 메서드입니다. 클라이언트가 전송한 회원가입 요청 데이터를 SignupReqDto 객체로 받아와 유효성을 검사한 후,
+    // AuthService를 통해 회원가입을 처리합니다. 처리가 성공하면 ResponseEntity에 성공 상태 코드를 포함하여 반환합니다.
 
     @ValidAspect
     @ParamsPrintAspect
@@ -48,20 +50,27 @@ public class AuthController { //0313 -2
         authService.oAuth2Signup(oAuth2SignupReqDto);
         return ResponseEntity.created(null).body(true);
     } //*************oauth회원가입
+    // OAuth2를 통한 회원가입 요청을 처리하는 메서드입니다. 클라이언트가 전송한 OAuth2 회원가입 요청 데이터를 OAuth2SignupReqDto 객체로 받아와
+    // 유효성을 검사한 후, AuthService를 통해 OAuth2 회원가입을 처리합니다. 처리가 성공하면 ResponseEntity에 성공 상태 코드를 포함하여 반환합니다.
 
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody SigninReqDto signinReqDto) {
         return ResponseEntity.ok(authService.signin(signinReqDto));
     } //*************로그인
+    // 사용자의 로그인 요청을 처리하는 메서드입니다. 클라이언트가 전송한 로그인 요청 데이터를 SigninReqDto 객체로 받아와
+    // AuthService를 통해 로그인을 처리하고, 처리 결과를 ResponseEntity에 담아 반환합니다.
 
     @PostMapping("/oauth2/merge")
     public ResponseEntity<?> oAuth2Merge(@RequestBody OAuth2SignupReqDto oAuth2SignupReqDto) {
         authService.oAuth2Merge(oAuth2SignupReqDto);
         return ResponseEntity.ok(true);
     }
+    // OAuth2를 통한 회원가입 정보를 병합하는 메서드입니다. 클라이언트가 전송한 OAuth2 회원가입 정보를 OAuth2SignupReqDto
+    // 객체로 받아와서 AuthService를 통해 병합 작업을 수행하고, 처리 결과를 ResponseEntity에 담아 반환합니다.
 
 }
-
+// 이렇게 각 메서드는 회원가입, 로그인, OAuth2 회원가입, OAuth2 회원가입 정보 병합 등의 기능을 수행합니다.
+//--------------------------------------------------------------------------------------------------------------------
 // 순서 - 리액트 -> 시큐리티 ->컨트롤러(auth) -> 제이슨이 dto로 변해서 들어옴 -> dto정규식(형식) 걸어둠 -> valid로 유효성 검사해라
 // binding 에 넣어서 에러있으면 t 없으면 f -> 데이터를 받을때 유효해야지만 받아준다. 받을때마다 쓰니까 aop로 뺀다
 // 그리고 어노테이션 @validAspect달면 자동으로 유효성 검사 문제있으면 자동으로 응답한다 유효성 검사 끝나면 -> 서비스 에서 중복체크 -> dto -> entity ->

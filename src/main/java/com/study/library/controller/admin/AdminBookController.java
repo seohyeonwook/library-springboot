@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-public class AdminBookController {
+public class AdminBookController { //관리자가 도서를 관리하는 데 사용되는 컨트롤러
 
     @Autowired
     private BookService bookService;
@@ -30,22 +30,30 @@ public class AdminBookController {
         bookService.saveBook(registerBookReqDto);
 
         return ResponseEntity.created(null).body(true);
+        // 도서를 추가하는 엔드포인트입니다. 클라이언트로부터 전송된 요청의 Request Body에서
+        // RegisterBookReqDto를 유효성 검사하고(bindingResult를 통해),
+        // 유효한 경우 BookService를 통해 도서를 저장합니다. ResponseEntity는 도서가 성공적으로 저장되었음을 나타냅니다.
     }
 
 //    @ParamsPrintAspect
     @GetMapping("/books") // 도서검색
     public ResponseEntity<?> searchBooks(SearchBookReqDto searchBookReqDto) {
         return ResponseEntity.ok(bookService.searchBooks(searchBookReqDto));
+        // 도서를 검색하는 엔드포인트입니다. SearchBookReqDto를 통해 검색 조건을 전달하고,
+        // BookService를 통해 해당 조건에 맞는 도서를 검색하여 반환합니다.
     }
 
     @GetMapping("/books/count") //페이지네이션
     public ResponseEntity<?> getCount(SearchBookReqDto searchBookReqDto) {
         return ResponseEntity.ok(bookService.getBookCount(searchBookReqDto));
+        // 도서의 개수를 반환하는 엔드포인트입니다. SearchBookReqDto를 통해 검색 조건을 전달하고,
+        // BookService를 통해 해당 조건에 맞는 도서의 개수를 반환합니다.
     }
 
     @DeleteMapping("/book/{bookId}")// 한권이 bookId라는 뜻
     public ResponseEntity<?> deleteBook(@PathVariable int bookId) {// 한개만 지울거다 단건
         return ResponseEntity.ok(null);
+        // 특정 도서를 삭제하는 엔드포인트입니다. 경로 변수인 bookId에 해당하는 도서를 삭제합니다.
     }
 
     @ParamsPrintAspect
@@ -53,13 +61,17 @@ public class AdminBookController {
     public ResponseEntity<?> deleteBooks(@RequestBody List<Integer> bookIds) {//List 배열로 받을거다 = 여러개 삭제
         bookService.deleteBooks(bookIds);
         return ResponseEntity.ok(true);
+        // 여러 도서를 한 번에 삭제하는 엔드포인트입니다. Request Body로 받은 도서 ID 목록에 해당하는 도서들을 한 번에 삭제합니다.
     }
 
-    @PutMapping("/book/{bookId}")//삭제 @PathVariable int bookId는 별의미없다 ?? 어차피 디티오 안에 있어서
+    @PutMapping("/book/{bookId}")// @PathVariable int bookId는 별의미없다 ?? 어차피 디티오 안에 있어서
     public ResponseEntity<?> updateBook(@PathVariable int bookId, @RequestBody UpdateBookReqDto updateBookReqDto) {
         bookService.updateBook(updateBookReqDto);
         return ResponseEntity.ok(true);
+        // 특정 도서의 정보를 업데이트하는 엔드포인트입니다. 경로 변수인 bookId에 해당하는 도서의 정보를
+        // Request Body에 담긴 UpdateBookReqDto로 업데이트합니다.
     }
+    // 각 메서드는 도서 관리에 관련된 다양한 기능을 수행합니다.
 
 }
 // 패키지 중요도 = 컨트롤러- 레파지토리 - 서비스  역할만 알면 된다
